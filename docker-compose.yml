@@ -1,0 +1,20 @@
+version: "3.7"
+services:
+  server-front:
+    build:
+      context: .
+    image: ovloop-stats
+    volumes:
+      - ./src:/app/src
+      - ./server:/app/server
+    container_name: ovloop-stats-dev
+    ports:
+      - 7777:7777
+    # environment:
+    #   PORT: 7777
+    entrypoint: ["npm", "run", "dev"]
+networks:
+  default:
+    external:
+      name: ovloop-app
+
