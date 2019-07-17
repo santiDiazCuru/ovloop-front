@@ -3,11 +3,11 @@ services:
   server-front:
     build:
       context: .
-    image: ovloop-stats
+    image: ovloop-front
     volumes:
       - ./src:/app/src
       - ./server:/app/server
-    container_name: ovloop-stats-dev
+    container_name: ovloop-front-dev
     ports:
       - 7777:7777
     # environment:
