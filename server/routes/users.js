@@ -1,21 +1,26 @@
 const express = require('express');
 const router = express.Router();
-const Axios = require('axios')
+//const usersController = require('../controllers/users.controller')
+const passport = require('../passport/config')
+const User = require('../models/users')
 
 
-router.post('/login', (req, res) => {
-    return Axios.post('http://localhost:8080/users/login', req.body)
-        .then(user => res.json(user))
+//PASSPORT 
+router.post('/login', passport.authenticate('local'), (req, res) => {
+    res.send(req.user)
 })
 
 router.get("/session", function (req, res) {
-    return Axios.get('http://localhost:8080/users/session')
-        .then(session => res.json(session))
+   req.user ? res.json(true) : res.json(false)
 });
 
 router.get("/logout", function (req, res) {
-    return Axios.get('http://localhost:8080/users/logout')
-    .then(() => res.status(200).end())
+    req.session.destroy();
+    res.send(200)
 });
+router.post('/seed', (req,res)=>{
+    User.create({username: 'admin', password: 'admin'})
+    .then(user=>res.json(user))
+})
 
 module.exports = router
