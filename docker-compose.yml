@@ -10,9 +10,16 @@ services:
     container_name: ovloop-stats-dev
     ports:
       - 7777:7777
+    # depends_on:
+      # - mongo
     # environment:
     #   PORT: 7777
     entrypoint: ["npm", "run", "dev"]
+  # mongo:
+  #   container_name: mongo_dashboard
+  #   image: mongo
+  #   ports:
+  #     - "27017:27017"
 networks:
   default:
     external:
