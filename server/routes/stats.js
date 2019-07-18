@@ -2,19 +2,20 @@ const express = require('express');
 const router = express.Router();
 const Axios = require('axios')
 
+const host = `http://${process.env.API_HOST}:${process.env.API_PORT}`;
+
 router.post('/', (req, res) => {
-    return Axios.post('http://localhost:8080/stats', req.body)
+    return Axios.post(`${host}/stats`, req.body)
         .then(msgs => res.json(msgs.data))
 })
 router.get('/getchannels', (req, res) => {
-    return Axios.post('http://localhost:8080/stats/getchannels', req.body)
+    return Axios.get(`${host}/stats/getchannels`)
         .then(channels => res.json(channels.data))
 })
 router.get('/getorigins', (req, res) => {
-    return Axios.post('http://localhost:8080/stats/getorigins', req.body)
-        .then(origins => res.json(origins.data))
+    return Axios.get(`${host}/stats/getorigins`)
+        .then(origins => res.json(origins.data ))
 })
-
 
 
 module.exports = router
