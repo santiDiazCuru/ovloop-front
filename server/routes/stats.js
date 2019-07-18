@@ -7,11 +7,11 @@ router.post('/', (req, res) => {
         .then(msgs => res.json(msgs.data))
 })
 router.get('/getchannels', (req, res) => {
-    return Axios.post('http://localhost:8080/stats/getchannels', req.body)
+    return Axios.get('http://localhost:8080/stats/getchannels')
         .then(channels => res.json(channels.data))
 })
 router.get('/getorigins', (req, res) => {
-    return Axios.post('http://localhost:8080/stats/getorigins', req.body)
+    return Axios.get('http://localhost:8080/stats/getorigins')
         .then(origins => res.json(origins.data))
 })
 
