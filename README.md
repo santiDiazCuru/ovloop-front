@@ -1,3 +1,18 @@
+## Docker commands and explaining
+Since this project is dockerize, the needs to run npm is not anymore.
+
+To run it locally starting frontend with the backend docker-compoose first needs to create the docker image from here
+with the next command:
+
+```
+docker-compose build
+```
+
+Then just go to backend project and start with docker-compose normally.
+
+
+# General description
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
