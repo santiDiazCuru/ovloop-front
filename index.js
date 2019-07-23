@@ -18,9 +18,9 @@ mongoose.set('useCreateIndex', true);
 
 
 // CONNECT TO DB (con docker!!!!)
-mongoose.connect("mongodb://mongo:27017/dashboard")
-    .then(() => console.log('mongoDB connected to ovloop dashboard'))
-    .catch(err => console.log('db error: ', err));
+// mongoose.connect("mongodb://mongo:27017/dashboard")
+//     .then(() => console.log('mongoDB connected to ovloop dashboard'))
+//     .catch(err => console.log('db error: ', err));
 
 
 //PASSPORT & SESSION
@@ -36,13 +36,13 @@ app.use(passport.session());
 
 app.use(cookieParser());
 
-// CONNECT TO DB (para localhost)
-// mongoose.connect("mongodb://localhost/dashboard")
-//     .then(() => console.log('mongoDB connected to ovloops dashboard'))
-//     .catch(err => console.log('db error: ', err));
+//CONNECT TO DB (para localhost)
+mongoose.connect("mongodb://localhost/dashboard")
+    .then(() => console.log('mongoDB connected to ovloops dashboard'))
+    .catch(err => console.log('db error: ', err));
 
 // SETTTINGS
-app.set("port", process.env.PORT || 7777);
+app.set("port", process.env.PORT || 7770);
 
 // MIDDLEWARES
 app.use(express.static(path.join(__dirname, './server/public')));
