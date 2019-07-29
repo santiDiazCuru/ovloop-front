@@ -3,6 +3,13 @@ import { connect } from "react-redux";
 import ChartContainer from "../ChartContainer";
 import { fetchMessagesByOrigin } from "../../redux/actions/messageActions";
 import Template from "../Template";
+import PieChart from '../PieChartContainer'
+import LineChartContainer from '../LineChartContainer'
+import StatsTableContainer from '../StatsTableContainer'
+
+// import LineChartContainer from '../LineChartContainer'
+// import StatsTableContainer from '../StatsTableContainer'
+
 class GeneralContainer extends React.Component {
   constructor() {
     super();
@@ -18,23 +25,52 @@ class GeneralContainer extends React.Component {
     }
     return data
   }
+  sortMessagesForLineChart(arrayOfOrigins) {
+    const data = arrayOfOrigins.map(origin => {
+      return [origin.name, origin.list]
+    })
+    return data
+  }
+  sortMessagesForPieChart(messages) {
+    var data = []
+    const statuses = {}
+    for (let i = 0; i < messages.length; i++) {
+      statuses[messages[i].status] = statuses[messages[i].status] || 0
+      statuses[messages[i].status] = statuses[messages[i].status] + 1
+    }
+    for (const key in statuses) {
+      data.push({ x: `${key} ${Math.round((statuses[key] / messages.length) * 100)} %`, y: statuses[key] })
+    }
+    return data
+  }
 
   render() {
+    const data = this.sortMessagesForCharts(this.props.channels)
     const filter = {
       type: 'origin',
       name: this.props.match.params.origin
     }
+    const data2 = this.sortMessagesForLineChart(this.props.channels)
+    const data3 = this.sortMessagesForPieChart(this.props.messages)
     return (
       <div>
         <Template title={"Origin stats"} filter={filter} />
         {this.props.messages.length ?
           <div className='row'>
             <div className='col-6'>
-              <ChartContainer
-                success={this.props.success.length}
-                failed={this.props.failed.length}
-                total={this.props.messages.length}
+              <LineChartContainer
+                originArray={data2} title={`origin for ${this.props.match.params.origin}`}
               />
+            </div>
+            <div className='col-6'>
+              <PieChart
+                data={data3}
+              />
+            </div>
+            <div className='row'>
+              <div className='col-12 ' style={{ textAlign: 'center', width: '100%', paddingLeft: '300px' }}>
+                <StatsTableContainer title={this.props.origins[0].name} data={this.props.origins} />
+              </div>
             </div>
           </div>
           :
@@ -53,7 +89,9 @@ const mapStateToProps = function (state) {
   return {
     success: state.messages.success,
     failed: state.messages.failed,
-    messages: state.messages.list
+    messages: state.messages.list,
+    channels: state.messages.channels,
+    origins: state.messages.origins
   };
 };
 const mapDispatchToProps = function (dispatch) {

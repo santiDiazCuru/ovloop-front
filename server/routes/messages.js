@@ -93,7 +93,7 @@ router.post('/seed', function (req, res) {
         })
     }
     for(let i = 0; i<origins.length; i++){
-        originList.create({origin: origin[i]})
+        originList.create({origin: origins[i]})
     }
     res.send('listo')
 })
