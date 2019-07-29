@@ -8,20 +8,23 @@ services:
       - ./src:/app/src
       - ./server:/app/server
     container_name: ovloop-front-dev
+    environment: 
+      NODE_ENV: local
+      API_HOST: backend
+      API_PORT: 8080
     ports:
       - 7777:7777
-    # depends_on:
-      # - mongo
-    # environment:
-    #   PORT: 7777
+    external_links:
+      - ovloop-api-dev:backend
+    networks: 
+      - default
+      - ovloop-app
     entrypoint: ["npm", "run", "dev"]
-  # mongo:
-  #   container_name: mongo_dashboard
-  #   image: mongo
-  #   ports:
-  #     - "27017:27017"
 networks:
   default:
-    external:
-      name: ovloop-app
+    name: front-network
+  ovloop-app:
+    external: true
+
+
 

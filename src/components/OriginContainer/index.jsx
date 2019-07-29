@@ -8,14 +8,38 @@ class GeneralContainer extends React.Component {
     super();
     this.state = {};
   }
+  sortMessagesForCharts(messages) {
+    var data = []
+    for (let i = 0; i < messages.length; i++) {
+      const origin = {}
+      origin['x'] = `${messages[i].name} ${messages[i].percentage}`
+      origin['y'] = messages[i].total
+      data.push(origin)
+    }
+    return data
+  }
 
   render() {
+    const filter = {
+      type: 'origin',
+      name: this.props.match.params.origin
+    }
     return (
       <div>
-        <Template title={"Origin stats"} />
-        <div>
-          <ChartContainer />
-        </div>
+        <Template title={"Origin stats"} filter={filter} />
+        {this.props.messages.length ?
+          <div className='row'>
+            <div className='col-6'>
+              <ChartContainer
+                success={this.props.success.length}
+                failed={this.props.failed.length}
+                total={this.props.messages.length}
+              />
+            </div>
+          </div>
+          :
+          <div style={{ fontSize: '20px  ' }}>No se han encontrado mensajes...</div>
+        }
       </div>
     );
   }
@@ -25,12 +49,14 @@ class GeneralContainer extends React.Component {
   }
 }
 
-const mapStateToProps = function(state) {
+const mapStateToProps = function (state) {
   return {
+    success: state.messages.success,
+    failed: state.messages.failed,
     messages: state.messages.list
   };
 };
-const mapDispatchToProps = function(dispatch) {
+const mapDispatchToProps = function (dispatch) {
   return {
     fetchMessagesByOrigin: origin => dispatch(fetchMessagesByOrigin(origin))
   };

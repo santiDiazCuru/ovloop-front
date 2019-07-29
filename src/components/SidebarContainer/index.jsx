@@ -42,8 +42,8 @@ class SidebarContainer extends React.Component {
 
 const mapStateToProps = function(state) {
   return {
-    channels: state.messages.channels,
-    origins: state.messages.origins
+    channels: state.messages.channelList,
+    origins: state.messages.originList
   };
 };
 

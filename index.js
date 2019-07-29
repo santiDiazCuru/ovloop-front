@@ -42,7 +42,7 @@ mongoose.connect("mongodb://localhost/dashboard")
     .catch(err => console.log('db error: ', err));
 
 // SETTTINGS
-app.set("port", process.env.PORT || 7770);
+app.set("port", process.env.PORT || 7777);
 
 // MIDDLEWARES
 app.use(express.static(path.join(__dirname, './server/public')));
