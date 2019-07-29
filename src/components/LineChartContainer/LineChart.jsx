@@ -1,7 +1,7 @@
 import React from 'react';
 import { VictoryChart, VictoryLine, VictoryAxis, VictoryStack, VictoryTheme, VictoryLegend } from "victory";
 
-export default ({ data, domain, tags }) => (
+export default ({ data, domain, tags, title }) => (
     
     <VictoryStack >
         {domain ?
@@ -18,7 +18,7 @@ export default ({ data, domain, tags }) => (
                     )
                 })}
                  <VictoryLegend x={80} y={10}
-                    title = "Messages by Origin"
+                    title = {`Messages by ${title}`}
                     orientation="horizontal"
                     gutter={10}
                     itemsPerRow={2}

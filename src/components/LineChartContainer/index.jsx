@@ -8,8 +8,6 @@ class LineChartContainer extends React.Component {
         this.state = {};
     }
 
-
-
     sortMessages(list) {
         let sortedMessages = {}
         let messages = list
@@ -186,7 +184,6 @@ class LineChartContainer extends React.Component {
         return this.props.messages.length / 6
     }
 
-    
 
     render() {
 
@@ -196,7 +193,7 @@ class LineChartContainer extends React.Component {
         console.log('soy datataaa', data)
         return (
 
-            <LineChart data={data} domain={domain} tags={tags}/>
+            <LineChart data={data} domain={domain} tags={tags} title={this.props.title}/>
         );
     }
 }

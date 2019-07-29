@@ -23,7 +23,7 @@ class GeneralContainer extends React.Component {
     }
     return data
   }
-  sotMessagesForLineChart(arrayOfOrigins) {
+  sortMessagesForLineChart(arrayOfOrigins) {
     const data = arrayOfOrigins.map(origin => {
       return [origin.name, origin.list]
     })
@@ -34,7 +34,8 @@ class GeneralContainer extends React.Component {
   render() {
     const filter = null
     const origins = this.sortMessagesForCharts(this.props.origins)
-    const originArray = this.sotMessagesForLineChart(this.props.origins)
+    const originArray = this.sortMessagesForLineChart(this.props.origins)
+    const channelArray = this.sortMessagesForLineChart(this.props.channels)
     console.log('soy originarray', originArray)
 
     return (
@@ -44,21 +45,22 @@ class GeneralContainer extends React.Component {
           <div className='container'>
             <div className='row'>
               <div className='col-6'>
-                <LineChartContainer originArray={originArray} />
+                <LineChartContainer originArray={originArray} title={'origin'}/>
                 {/* <ChartContainer
                   success={this.props.success.length}
                   failed={this.props.failed.length}
                   total={this.props.messages.length} /> */}
               </div>
               <div className='col-6'>
-                <StatsTable title={'Origin'} data={this.props.origins} />
+              <LineChartContainer originArray={channelArray} title={'channel'}/>
+                {/* <StatsTable title={'Origin'} data={this.props.origins} /> */}
                 {/* <PieChart data={origins} /> */}
               </div>
             </div>
             <div className='row'>
               <div className='col-6'>
                 {/* <PieChart data={origins} /> */}
-                {/* <StatsTable title={'Origin'} data={this.props.origins} /> */}
+                <StatsTable title={'Origin'} data={this.props.origins} />
               </div>
               <div className='col-6'>
                 <StatsTable title={'Channel'} data={this.props.channels} />

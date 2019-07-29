@@ -52507,7 +52507,7 @@ function warning(message) {
 /*!***************************************************************!*\
   !*** ./node_modules/react-router-dom/esm/react-router-dom.js ***!
   \***************************************************************/
-/*! exports provided: BrowserRouter, HashRouter, Link, NavLink, MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext */
+/*! exports provided: MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext, BrowserRouter, HashRouter, Link, NavLink */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -83142,6 +83142,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ChartContainer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../ChartContainer */ "./src/components/ChartContainer/index.jsx");
 /* harmony import */ var _redux_actions_messageActions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../redux/actions/messageActions */ "./src/redux/actions/messageActions.js");
 /* harmony import */ var _Template__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../Template */ "./src/components/Template/index.jsx");
+/* harmony import */ var _PieChartContainer__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../PieChartContainer */ "./src/components/PieChartContainer/index.jsx");
+/* harmony import */ var _LineChartContainer__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../LineChartContainer */ "./src/components/LineChartContainer/index.jsx");
+/* harmony import */ var _StatsTableContainer__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../StatsTableContainer */ "./src/components/StatsTableContainer/index.jsx");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -83166,6 +83169,9 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
+
+
+
 var GeneralContainer =
 /*#__PURE__*/
 function (_React$Component) {
@@ -83178,12 +83184,57 @@ function (_React$Component) {
   }
 
   _createClass(GeneralContainer, [{
+    key: "sortMessagesForCharts",
+    value: function sortMessagesForCharts(messages) {
+      var data = [];
+
+      for (var i = 0; i < messages.length; i++) {
+        var origin = {};
+        origin['x'] = "".concat(messages[i].name, " ").concat(messages[i].percentage);
+        origin['y'] = messages[i].total;
+        data.push(origin);
+      }
+
+      return data;
+    }
+  }, {
+    key: "sortMessagesForLineChart",
+    value: function sortMessagesForLineChart(arrayOfOrigins) {
+      var data = arrayOfOrigins.map(function (origin) {
+        return [origin.name, origin.list];
+      });
+      return data;
+    }
+  }, {
+    key: "sortMessagesForPieChart",
+    value: function sortMessagesForPieChart(messages) {
+      var data = [];
+      var statuses = {};
+
+      for (var i = 0; i < messages.length; i++) {
+        statuses[messages[i].status] = statuses[messages[i].status] || 0;
+        statuses[messages[i].status] = statuses[messages[i].status] + 1;
+      }
+
+      for (var key in statuses) {
+        data.push({
+          x: "".concat(key, " ").concat(Math.round(statuses[key] / messages.length * 100), " %"),
+          y: statuses[key]
+        });
+      }
+
+      return data;
+    }
+  }, {
     key: "render",
     value: function render() {
+      var data = this.sortMessagesForCharts(this.props.origins);
       var filter = {
         type: 'channel',
         name: this.props.match.params.channel
       };
+      var data2 = this.sortMessagesForLineChart(this.props.origins);
+      var data3 = this.sortMessagesForPieChart(this.props.messages);
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Template__WEBPACK_IMPORTED_MODULE_4__["default"], {
         title: "Channel stats",
         filter: filter
@@ -83191,11 +83242,26 @@ function (_React$Component) {
         className: "row"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-6"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ChartContainer__WEBPACK_IMPORTED_MODULE_2__["default"], {
-        success: this.props.success.length,
-        failed: this.props.failed.length,
-        total: this.props.messages.length
-      }))) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_LineChartContainer__WEBPACK_IMPORTED_MODULE_6__["default"], {
+        originArray: data2,
+        title: "origin for ".concat(this.props.match.params.channel)
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-6"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_PieChartContainer__WEBPACK_IMPORTED_MODULE_5__["default"], {
+        data: data3
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "row"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-12 ",
+        style: {
+          textAlign: 'center',
+          width: '100%',
+          paddingLeft: '300px'
+        }
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_StatsTableContainer__WEBPACK_IMPORTED_MODULE_7__["default"], {
+        title: this.props.channels[0].name,
+        data: this.props.channels
+      })))) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         style: {
           fontSize: '20px  '
         }
@@ -83215,7 +83281,9 @@ var mapStateToProps = function mapStateToProps(state) {
   return {
     success: state.messages.success,
     failed: state.messages.failed,
-    messages: state.messages.list
+    messages: state.messages.list,
+    origins: state.messages.origins,
+    channels: state.messages.channels
   };
 };
 
@@ -83556,8 +83624,8 @@ function (_React$Component) {
       return data;
     }
   }, {
-    key: "sotMessagesForLineChart",
-    value: function sotMessagesForLineChart(arrayOfOrigins) {
+    key: "sortMessagesForLineChart",
+    value: function sortMessagesForLineChart(arrayOfOrigins) {
       var data = arrayOfOrigins.map(function (origin) {
         return [origin.name, origin.list];
       });
@@ -83568,7 +83636,8 @@ function (_React$Component) {
     value: function render() {
       var filter = null;
       var origins = this.sortMessagesForCharts(this.props.origins);
-      var originArray = this.sotMessagesForLineChart(this.props.origins);
+      var originArray = this.sortMessagesForLineChart(this.props.origins);
+      var channelArray = this.sortMessagesForLineChart(this.props.channels);
       console.log('soy originarray', originArray);
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Template__WEBPACK_IMPORTED_MODULE_1__["default"], {
         title: "General stats",
@@ -83580,17 +83649,21 @@ function (_React$Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-6"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_LineChartContainer__WEBPACK_IMPORTED_MODULE_7__["default"], {
-        originArray: originArray
+        originArray: originArray,
+        title: 'origin'
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-6"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_StatsTableContainer__WEBPACK_IMPORTED_MODULE_6__["default"], {
-        title: 'Origin',
-        data: this.props.origins
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_LineChartContainer__WEBPACK_IMPORTED_MODULE_7__["default"], {
+        originArray: channelArray,
+        title: 'channel'
       }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "row"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-6"
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_StatsTableContainer__WEBPACK_IMPORTED_MODULE_6__["default"], {
+        title: 'Origin',
+        data: this.props.origins
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-6"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_StatsTableContainer__WEBPACK_IMPORTED_MODULE_6__["default"], {
         title: 'Channel',
@@ -83650,7 +83723,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = (function (_ref) {
   var data = _ref.data,
       domain = _ref.domain,
-      tags = _ref.tags;
+      tags = _ref.tags,
+      title = _ref.title;
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(victory__WEBPACK_IMPORTED_MODULE_1__["VictoryStack"], null, domain ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(victory__WEBPACK_IMPORTED_MODULE_1__["VictoryChart"], {
     domain: {
       y: [0, domain]
@@ -83669,7 +83743,7 @@ __webpack_require__.r(__webpack_exports__);
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(victory__WEBPACK_IMPORTED_MODULE_1__["VictoryLegend"], {
     x: 80,
     y: 10,
-    title: "Messages by Origin",
+    title: "Messages by ".concat(title),
     orientation: "horizontal",
     gutter: 10,
     itemsPerRow: 2,
@@ -84066,7 +84140,8 @@ function (_React$Component) {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_LineChart__WEBPACK_IMPORTED_MODULE_1__["default"], {
         data: data,
         domain: domain,
-        tags: tags
+        tags: tags,
+        title: this.props.title
       });
     }
   }]);
@@ -84513,6 +84588,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ChartContainer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../ChartContainer */ "./src/components/ChartContainer/index.jsx");
 /* harmony import */ var _redux_actions_messageActions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../redux/actions/messageActions */ "./src/redux/actions/messageActions.js");
 /* harmony import */ var _Template__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../Template */ "./src/components/Template/index.jsx");
+/* harmony import */ var _PieChartContainer__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../PieChartContainer */ "./src/components/PieChartContainer/index.jsx");
+/* harmony import */ var _LineChartContainer__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../LineChartContainer */ "./src/components/LineChartContainer/index.jsx");
+/* harmony import */ var _StatsTableContainer__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../StatsTableContainer */ "./src/components/StatsTableContainer/index.jsx");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -84536,6 +84614,10 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
+
+
+ // import LineChartContainer from '../LineChartContainer'
+// import StatsTableContainer from '../StatsTableContainer'
 
 var GeneralContainer =
 /*#__PURE__*/
@@ -84567,12 +84649,43 @@ function (_React$Component) {
       return data;
     }
   }, {
+    key: "sortMessagesForLineChart",
+    value: function sortMessagesForLineChart(arrayOfOrigins) {
+      var data = arrayOfOrigins.map(function (origin) {
+        return [origin.name, origin.list];
+      });
+      return data;
+    }
+  }, {
+    key: "sortMessagesForPieChart",
+    value: function sortMessagesForPieChart(messages) {
+      var data = [];
+      var statuses = {};
+
+      for (var i = 0; i < messages.length; i++) {
+        statuses[messages[i].status] = statuses[messages[i].status] || 0;
+        statuses[messages[i].status] = statuses[messages[i].status] + 1;
+      }
+
+      for (var key in statuses) {
+        data.push({
+          x: "".concat(key, " ").concat(Math.round(statuses[key] / messages.length * 100), " %"),
+          y: statuses[key]
+        });
+      }
+
+      return data;
+    }
+  }, {
     key: "render",
     value: function render() {
+      var data = this.sortMessagesForCharts(this.props.channels);
       var filter = {
         type: 'origin',
         name: this.props.match.params.origin
       };
+      var data2 = this.sortMessagesForLineChart(this.props.channels);
+      var data3 = this.sortMessagesForPieChart(this.props.messages);
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Template__WEBPACK_IMPORTED_MODULE_4__["default"], {
         title: "Origin stats",
         filter: filter
@@ -84580,11 +84693,26 @@ function (_React$Component) {
         className: "row"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-6"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ChartContainer__WEBPACK_IMPORTED_MODULE_2__["default"], {
-        success: this.props.success.length,
-        failed: this.props.failed.length,
-        total: this.props.messages.length
-      }))) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_LineChartContainer__WEBPACK_IMPORTED_MODULE_6__["default"], {
+        originArray: data2,
+        title: "origin for ".concat(this.props.match.params.origin)
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-6"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_PieChartContainer__WEBPACK_IMPORTED_MODULE_5__["default"], {
+        data: data3
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "row"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-12 ",
+        style: {
+          textAlign: 'center',
+          width: '100%',
+          paddingLeft: '300px'
+        }
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_StatsTableContainer__WEBPACK_IMPORTED_MODULE_7__["default"], {
+        title: this.props.origins[0].name,
+        data: this.props.origins
+      })))) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         style: {
           fontSize: '20px  '
         }
@@ -84604,7 +84732,9 @@ var mapStateToProps = function mapStateToProps(state) {
   return {
     success: state.messages.success,
     failed: state.messages.failed,
-    messages: state.messages.list
+    messages: state.messages.list,
+    channels: state.messages.channels,
+    origins: state.messages.origins
   };
 };
 
