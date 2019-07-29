@@ -18,7 +18,7 @@ router.get('/getchannels', (req, res) => {
 })
 router.get('/getorigins', (req, res) => {
     return Axios.get(`${host}/stats/getorigins`)
-        .then(origins => res.json(origins.data ))
+        .then(origins => res.json(origins.data))
 })
 
 //RUTAS PARA CUANDO SE LEVANTA TODO CON NPM INDEPENDIENTEMENTE
