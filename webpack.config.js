@@ -1,9 +1,10 @@
+const path = require('path')
 module.exports = {
   mode: 'development',
   entry: './src/index.js',
   output: {
     filename: "bundle.js",
-    path: __dirname + './server/public'
+    path: path.resolve(__dirname, './server/public')
   },
   resolve: {
     extensions: ['.js', '.jsx']
@@ -30,3 +31,13 @@ module.exports = {
   },
   devtool: 'source-map'
 }
+
+
+
+// output: {
+//   path: path.resolve(__dirname, 'dist'),
+//   publicPath: '/dist/',
+//   filename: 'bundle.js'
+// }
+
+//path: path.resolve(__dirname, '/server/public')

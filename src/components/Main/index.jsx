@@ -18,7 +18,6 @@ class MainContainer extends React.Component {
     }
   }
   componentWillMount() {
-    console.log('gkjasnvkjjasnvjsasbjhbv')
     this.setState({ loading: true })
     this.props.validateSession()
     setTimeout(() => { this.setState({ loading: false }) }, 500)
