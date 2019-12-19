@@ -26,7 +26,7 @@ export default ({ data, domain, tags, title }) => (
                     style={{
                         labels: { fontSize: 10 },
                         border: { stroke: "black" },
-                        title: {fontSize: 20 }
+                        title: {fontSize: 12 }
                       }}
                     data={tags}
                 />
@@ -54,7 +54,7 @@ export default ({ data, domain, tags, title }) => (
                     style={{
                         labels: { fontSize: 10 },
                         border: { stroke: "black" },
-                        title: {fontSize: 20 }
+                        title: {fontSize: 12 }
                       }}
                     data={tags}
                 />

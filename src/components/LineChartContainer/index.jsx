@@ -197,7 +197,7 @@ class LineChartContainer extends React.Component {
         );
     }
 }
-
+        
 const mapStateToProps = function (state) {
     return {
         success: state.messages.success,

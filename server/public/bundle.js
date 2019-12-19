@@ -52507,7 +52507,7 @@ function warning(message) {
 /*!***************************************************************!*\
   !*** ./node_modules/react-router-dom/esm/react-router-dom.js ***!
   \***************************************************************/
-/*! exports provided: MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext, BrowserRouter, HashRouter, Link, NavLink */
+/*! exports provided: BrowserRouter, HashRouter, Link, NavLink, MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -83247,21 +83247,29 @@ function (_React$Component) {
         title: "origin for ".concat(this.props.match.params.channel)
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-6"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_PieChartContainer__WEBPACK_IMPORTED_MODULE_5__["default"], {
-        data: data3
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "row"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col-12 ",
+        className: "col-9 ",
         style: {
           textAlign: 'center',
-          width: '100%',
-          paddingLeft: '300px'
+          width: '80%',
+          paddingTop: '15px'
         }
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_StatsTableContainer__WEBPACK_IMPORTED_MODULE_7__["default"], {
         title: this.props.channels[0].name,
         data: this.props.channels
-      })))) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "row"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-9",
+        style: {
+          width: '70%',
+          height: '70%'
+        }
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_PieChartContainer__WEBPACK_IMPORTED_MODULE_5__["default"], {
+        data: data3
+      }))))) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         style: {
           fontSize: '20px  '
         }
@@ -83638,13 +83646,10 @@ function (_React$Component) {
       var origins = this.sortMessagesForCharts(this.props.origins);
       var originArray = this.sortMessagesForLineChart(this.props.origins);
       var channelArray = this.sortMessagesForLineChart(this.props.channels);
-      console.log('soy originarray', originArray);
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Template__WEBPACK_IMPORTED_MODULE_1__["default"], {
         title: "General stats",
         filter: filter
-      }), this.props.messages.length ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "container"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }), this.props.messages.length ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "row"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-6"
@@ -83668,7 +83673,11 @@ function (_React$Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_StatsTableContainer__WEBPACK_IMPORTED_MODULE_6__["default"], {
         title: 'Channel',
         data: this.props.channels
-      })))) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "row"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-12"
+      }))) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         style: {
           fontSize: '20px  '
         }
@@ -83756,7 +83765,7 @@ __webpack_require__.r(__webpack_exports__);
         stroke: "black"
       },
       title: {
-        fontSize: 20
+        fontSize: 12
       }
     },
     data: tags
@@ -83794,7 +83803,7 @@ __webpack_require__.r(__webpack_exports__);
         stroke: "black"
       },
       title: {
-        fontSize: 20
+        fontSize: 12
       }
     },
     data: tags
@@ -84390,8 +84399,8 @@ function (_React$Component) {
 
       this.setState({
         loading: true
-      });
-      this.props.validateSession();
+      }); // this.props.validateSession()
+
       setTimeout(function () {
         _this2.setState({
           loading: false
@@ -84406,31 +84415,33 @@ function (_React$Component) {
           className: "loader"
         });
       } else {
-        if (this.props.isLoggedIn) {
-          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_NavbarContainer__WEBPACK_IMPORTED_MODULE_3__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-            className: "container-fluid"
-          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-            className: "row"
-          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-            className: "col-2"
-          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_SidebarContainer__WEBPACK_IMPORTED_MODULE_4__["default"], null)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-            className: "col-10"
-          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Switch"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
-            path: "/general",
-            component: _GeneralContainer__WEBPACK_IMPORTED_MODULE_5__["default"]
-          }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
-            path: "/channel/:channel",
-            component: _ChannelContainer__WEBPACK_IMPORTED_MODULE_8__["default"]
-          }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
-            path: "/origin/:origin",
-            component: _OriginContainer__WEBPACK_IMPORTED_MODULE_9__["default"]
-          }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Redirect"], {
-            from: "/",
-            to: "/general"
-          }))))));
-        } else {
-          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_LoginContainer__WEBPACK_IMPORTED_MODULE_6__["default"], null);
-        }
+        // if (this.props.isLoggedIn) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_NavbarContainer__WEBPACK_IMPORTED_MODULE_3__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "container-fluid"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "row"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "col-2"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_SidebarContainer__WEBPACK_IMPORTED_MODULE_4__["default"], null)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "col-10"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Switch"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
+          path: "/general",
+          component: _GeneralContainer__WEBPACK_IMPORTED_MODULE_5__["default"]
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
+          path: "/channel/:channel",
+          component: _ChannelContainer__WEBPACK_IMPORTED_MODULE_8__["default"]
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
+          path: "/origin/:origin",
+          component: _OriginContainer__WEBPACK_IMPORTED_MODULE_9__["default"]
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Redirect"], {
+          from: "/",
+          to: "/general"
+        })))))); // }
+        // else {
+        //   return (
+        //     <LoginContainer />
+        //   )
+        // }
       }
     }
   }]);
@@ -84698,21 +84709,29 @@ function (_React$Component) {
         title: "origin for ".concat(this.props.match.params.origin)
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-6"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_PieChartContainer__WEBPACK_IMPORTED_MODULE_5__["default"], {
-        data: data3
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "row"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col-12 ",
+        className: "col-9 ",
         style: {
           textAlign: 'center',
-          width: '100%',
-          paddingLeft: '300px'
+          width: '80%',
+          paddingTop: '15px'
         }
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_StatsTableContainer__WEBPACK_IMPORTED_MODULE_7__["default"], {
-        title: this.props.origins[0].name,
-        data: this.props.origins
-      })))) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        title: this.props.channels[0].name,
+        data: this.props.channels
+      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "row"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-9",
+        style: {
+          width: '70%',
+          height: '70%'
+        }
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_PieChartContainer__WEBPACK_IMPORTED_MODULE_5__["default"], {
+        data: data3
+      }))))) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         style: {
           fontSize: '20px  '
         }
@@ -84765,15 +84784,12 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /* harmony default export */ __webpack_exports__["default"] = (function (_ref) {
-  var data = _ref.data;
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "row"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "col-9"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("svg", {
+  var data = _ref.data,
+      colorScale = _ref.colorScale;
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("svg", {
     viewBox: "0 0 400 400"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(victory__WEBPACK_IMPORTED_MODULE_1__["VictoryPie"], {
-    colorScale: ["#d00808", "#fcb268", "#8c9535", "#334660"],
+    colorScale: ["333", "9C2921"],
     standalone: false,
     data: data // innerRadius={50}
     ,
@@ -84781,10 +84797,10 @@ __webpack_require__.r(__webpack_exports__);
     style: {
       labels: {
         fontSize: 10,
-        fill: "black"
+        fill: "white"
       }
     }
-  }))));
+  }));
 });
 
 /***/ }),

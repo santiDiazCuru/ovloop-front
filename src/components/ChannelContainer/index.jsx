@@ -31,10 +31,10 @@ class GeneralContainer extends React.Component {
     const statuses = {}
     for (let i = 0; i < messages.length; i++) {
       statuses[messages[i].status] = statuses[messages[i].status] || 0
-      statuses[messages[i].status] = statuses[messages[i].status] +1
+      statuses[messages[i].status] = statuses[messages[i].status] + 1
     }
-    for (const key in statuses){
-      data.push({x: `${key} ${Math.round((statuses[key]/messages.length)*100)} %`, y: statuses[key] })
+    for (const key in statuses) {
+      data.push({ x: `${key} ${Math.round((statuses[key] / messages.length) * 100)} %`, y: statuses[key] })
     }
     return data
   }
@@ -58,15 +58,19 @@ class GeneralContainer extends React.Component {
               />
             </div>
             <div className='col-6'>
-              <PieChart
-                data = {data3}
-              />
-            </div>
-          <div className='row'>
-            <div className='col-12 ' style={{textAlign: 'center', width: '100%', paddingLeft: '300px' }}>
-              <StatsTableContainer  title={this.props.channels[0].name} data={this.props.channels}/>
+              <div className='row'>
+                <div className='col-9 ' style={{ textAlign: 'center', width: '80%', paddingTop: '15px'}}>
+                  <StatsTableContainer title={this.props.channels[0].name} data={this.props.channels} />
+                </div>
               </div>
-          </div>
+              <div className='row'>
+                <div className='col-9' style={{width: '70%', height: '70%'}}>
+                  <PieChart
+                    data={data3}
+                  />
+                </div>
+              </div>
+            </div>
           </div>
           :
           <div style={{ fontSize: '20px  ' }}>No se han encontrado mensajes...</div>

@@ -1,12 +1,12 @@
-import { SET_DATE_FROM, SET_DATE_TO } from '../../constants';
+import { SET_DATE_FROM, SET_DATE_TO } from "../../constants";
 
 const initialState = {
-  from: '',
-  to: ''
-}
+  from: "",
+  to: ""
+};
 
 export default (state = initialState, action) => {
-  switch(action.type) {
+  switch (action.type) {
     case SET_DATE_FROM:
       return Object.assign({}, state, { from: action.from });
     case SET_DATE_TO:
@@ -14,4 +14,4 @@ export default (state = initialState, action) => {
     default:
       return state;
   }
-}
+};

@@ -36,35 +36,33 @@ class GeneralContainer extends React.Component {
     const origins = this.sortMessagesForCharts(this.props.origins)
     const originArray = this.sortMessagesForLineChart(this.props.origins)
     const channelArray = this.sortMessagesForLineChart(this.props.channels)
-    console.log('soy originarray', originArray)
 
     return (
       <div>
         <Template title={"General stats"} filter={filter} />
         {this.props.messages.length ?
-          <div className='container'>
+          <div >
             <div className='row'>
               <div className='col-6'>
-                <LineChartContainer originArray={originArray} title={'origin'}/>
-                {/* <ChartContainer
-                  success={this.props.success.length}
-                  failed={this.props.failed.length}
-                  total={this.props.messages.length} /> */}
+                <LineChartContainer originArray={originArray} title={'origin'} />
               </div>
               <div className='col-6'>
-              <LineChartContainer originArray={channelArray} title={'channel'}/>
-                {/* <StatsTable title={'Origin'} data={this.props.origins} /> */}
-                {/* <PieChart data={origins} /> */}
+                <LineChartContainer originArray={channelArray} title={'channel'} />
               </div>
             </div>
             <div className='row'>
               <div className='col-6'>
-                {/* <PieChart data={origins} /> */}
                 <StatsTable title={'Origin'} data={this.props.origins} />
               </div>
               <div className='col-6'>
                 <StatsTable title={'Channel'} data={this.props.channels} />
               </div>
+            </div>
+            <div className='row'>
+              <div className='col-12'>
+                  
+              </div>
+
             </div>
           </div>
           :
